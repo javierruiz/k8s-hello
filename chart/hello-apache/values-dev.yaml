@@ -1,0 +1,9 @@
+replicaCount: 1
+
+html: |
+  <!doctype html>
+  <html>
+    <body>
+      <h1>Hello from DEV</h1>
+    </body>
+  </html>

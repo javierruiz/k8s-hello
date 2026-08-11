@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 
 metadata:
-  name: hello-apache
+  name: hello-apache-prod
   namespace: argocd
 
 spec:
@@ -16,15 +16,12 @@ spec:
     helm:
       valueFiles:
         - values.yaml
+        - values-prod.yaml
 
   destination:
     server: https://kubernetes.default.svc
-    namespace: hello
+    namespace: prod
 
   syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-
     syncOptions:
       - CreateNamespace=true

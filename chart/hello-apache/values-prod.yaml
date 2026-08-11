@@ -1,0 +1,17 @@
+replicaCount: 3
+
+resources:
+  requests:
+    cpu: "100m"
+    memory: "64Mi"
+  limits:
+    cpu: "500m"
+    memory: "256Mi"
+
+html: |
+  <!doctype html>
+  <html>
+    <body>
+      <h1>Hello from PROD</h1>
+    </body>
+  </html>

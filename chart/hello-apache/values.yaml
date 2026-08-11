@@ -1,5 +1,3 @@
-replicaCount: 5
-
 image:
   repository: httpd
   tag: "2.4.68"
@@ -26,15 +24,3 @@ livenessProbe:
   path: /
   initialDelaySeconds: 5
   periodSeconds: 10
-
-html: |
-  <!doctype html>
-  <html>
-    <head>
-      <title>Kubernetes + Helm + ArgoCD</title>
-    </head>
-    <body>
-      <h1>Hello World from Kubernetes</h1>
-      <p>Managed with Helm and Argo CD.</p>
-    </body>
-  </html>
