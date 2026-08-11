@@ -1,0 +1,40 @@
+replicaCount: 3
+
+image:
+  repository: httpd
+  tag: "2.4.68"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+resources:
+  requests:
+    cpu: "50m"
+    memory: "32Mi"
+  limits:
+    cpu: "200m"
+    memory: "128Mi"
+
+readinessProbe:
+  path: /
+  initialDelaySeconds: 2
+  periodSeconds: 5
+
+livenessProbe:
+  path: /
+  initialDelaySeconds: 5
+  periodSeconds: 10
+
+html: |
+  <!doctype html>
+  <html>
+    <head>
+      <title>Kubernetes + Helm + ArgoCD</title>
+    </head>
+    <body>
+      <h1>Hello World from Kubernetes</h1>
+      <p>Managed with Helm and Argo CD.</p>
+    </body>
+  </html>

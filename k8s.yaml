@@ -1,0 +1,92 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hello-html
+
+data:
+  index.html: |
+    <!doctype html>
+    <html>
+      <head>
+        <title>Kubernetes Hello World</title>
+      </head>
+      <body>
+        <h1>Hello World from Kubernetes</h1>
+        <p>Apache is running inside a Kubernetes Pod.</p>
+      </body>
+    </html>
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-apache
+
+spec:
+  replicas: 3
+
+  selector:
+    matchLabels:
+      app: hello-apache
+
+  template:
+    metadata:
+      labels:
+        app: hello-apache
+
+    spec:
+      containers:
+        - name: apache
+          image: httpd:2.4.68
+
+          ports:
+            - containerPort: 80
+        
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "32Mi"
+            limits:
+              cpu: "200m"
+              memory: "128Mi"
+
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            failureThreshold: 3
+
+          volumeMounts:
+            - name: html
+              mountPath: /usr/local/apache2/htdocs
+              readOnly: true
+
+      volumes:
+        - name: html
+          configMap:
+            name: hello-html
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-apache
+
+spec:
+  selector:
+    app: hello-apache
+
+  ports:
+    - port: 80
+      targetPort: 80
+
+  type: ClusterIP
