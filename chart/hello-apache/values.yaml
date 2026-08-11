@@ -1,4 +1,4 @@
-replicaCount: 3
+replicaCount: 1
 
 image:
   repository: httpd
@@ -38,3 +38,6 @@ html: |
       <p>Managed with Helm and Argo CD.</p>
     </body>
   </html>
+
+  git config user.name "javierruiz"
+git config user.email javirg.89@gmail.com
